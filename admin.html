@@ -1,0 +1,162 @@
+<!doctype html>
+<html lang="th">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow">
+  <title>DevLinks Admin</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%230d1117'/%3E%3Ctext x='5' y='22' font-family='monospace' font-size='16' font-weight='700' fill='%2358a6ff'%3E%3E_%3C/text%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai:wght@400;500;600&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/style.css">
+  <link rel="stylesheet" href="assets/admin.css">
+</head>
+<body class="ad">
+  <header class="ad-top">
+    <div class="ad-brand mono"><span class="ad-brand-mark">&gt;_</span> devlinks <span class="ad-muted">/ admin</span></div>
+    <div class="ad-top-actions">
+      <span id="dirtyBadge" class="ad-badge" hidden>unsaved changes</span>
+      <a class="ad-btn ad-btn-ghost" href="./" target="_blank" rel="noopener">View live page</a>
+    </div>
+  </header>
+
+  <div class="ad-layout">
+    <div class="ad-editor">
+
+      <!-- GitHub connection -->
+      <details class="ad-panel" id="connPanel" open>
+        <summary class="ad-panel-head">
+          <span>
+            <span class="ad-panel-title">GitHub connection</span>
+            <span class="ad-panel-sub" id="connSummary">Not connected — editing a local copy</span>
+          </span>
+        </summary>
+        <form id="connForm" class="ad-panel-body" autocomplete="off">
+          <div class="ad-grid-3">
+            <label class="ad-field"><span>Owner</span><input id="cfgOwner" name="owner" placeholder="your-username" required></label>
+            <label class="ad-field"><span>Repository</span><input id="cfgRepo" name="repo" placeholder="devlinks" required></label>
+            <label class="ad-field"><span>Branch</span><input id="cfgBranch" name="branch" value="main" required></label>
+          </div>
+          <label class="ad-field">
+            <span>Personal access token</span>
+            <input id="cfgToken" name="token" type="password" placeholder="github_pat_…" required>
+            <small class="ad-hint">Fine-grained token with <b>Contents: Read and write</b> on this repo only. It never leaves your browser except to call api.github.com.</small>
+          </label>
+          <label class="ad-check"><input id="cfgRemember" type="checkbox"> Remember token on this device</label>
+          <div class="ad-row">
+            <button class="ad-btn ad-btn-primary" type="submit">Connect &amp; load</button>
+            <button class="ad-btn ad-btn-ghost" type="button" id="disconnectBtn" hidden>Disconnect</button>
+          </div>
+        </form>
+      </details>
+
+      <!-- Profile -->
+      <section class="ad-panel" aria-labelledby="profileTitle">
+        <div class="ad-panel-head"><span class="ad-panel-title" id="profileTitle">Profile</span></div>
+        <div class="ad-panel-body">
+          <div class="ad-avatar-row">
+            <div class="ad-avatar-preview" id="avatarPreview" aria-hidden="true"></div>
+            <div class="ad-avatar-fields">
+              <label class="ad-field"><span>Avatar URL or repo path</span><input data-bind="profile.avatar" placeholder="assets/uploads/avatar.jpg or https://…"></label>
+              <div class="ad-row">
+                <label class="ad-btn ad-btn-ghost ad-file">Upload photo
+                  <input type="file" id="avatarFile" accept="image/png,image/jpeg,image/webp,image/gif">
+                </label>
+                <button type="button" class="ad-btn ad-btn-ghost" id="avatarClear">Remove</button>
+              </div>
+            </div>
+          </div>
+          <div class="ad-grid-2">
+            <label class="ad-field"><span>Name</span><input data-bind="profile.name" maxlength="60"></label>
+            <label class="ad-field"><span>Name (local / nickname)</span><input data-bind="profile.nameLocal" maxlength="60"></label>
+            <label class="ad-field"><span>Handle (shown in the terminal)</span><input data-bind="profile.handle" maxlength="30"></label>
+            <label class="ad-field"><span>Role</span><input data-bind="profile.role" maxlength="80"></label>
+          </div>
+          <label class="ad-field"><span>Bio</span><textarea data-bind="profile.bio" rows="3" maxlength="280"></textarea></label>
+          <label class="ad-field"><span>Tech stack <small class="ad-muted">(comma separated)</small></span><input data-bind="profile.stack" data-type="list" placeholder="Angular, NestJS, PostgreSQL"></label>
+          <div class="ad-grid-2">
+            <label class="ad-field"><span>Status</span><input data-bind="profile.status" maxlength="60"></label>
+            <label class="ad-check ad-check-inline"><input type="checkbox" data-bind="profile.showStatus" data-type="bool"> Show status badge</label>
+          </div>
+          <div class="ad-field">
+            <span id="accentLabel">Accent color</span>
+            <div class="ad-swatches" role="group" aria-labelledby="accentLabel">
+              <button type="button" class="ad-swatch" data-color="#3fb950" style="background:#3fb950" aria-label="Green"></button>
+              <button type="button" class="ad-swatch" data-color="#58a6ff" style="background:#58a6ff" aria-label="Blue"></button>
+              <button type="button" class="ad-swatch" data-color="#d29922" style="background:#d29922" aria-label="Amber"></button>
+              <button type="button" class="ad-swatch" data-color="#bc8cff" style="background:#bc8cff" aria-label="Purple"></button>
+              <button type="button" class="ad-swatch" data-color="#ff7b72" style="background:#ff7b72" aria-label="Coral"></button>
+              <input type="color" data-bind="profile.accent" aria-label="Custom accent color" class="ad-color">
+            </div>
+          </div>
+          <label class="ad-field"><span>Footer text</span><input data-bind="footer" maxlength="80"></label>
+        </div>
+      </section>
+
+      <!-- Links -->
+      <section class="ad-panel" aria-labelledby="linksTitle">
+        <div class="ad-panel-head">
+          <span class="ad-panel-title" id="linksTitle">Links <span class="ad-count" id="linkCount"></span></span>
+          <button type="button" class="ad-btn ad-btn-primary ad-btn-sm" id="addLink">+ Add link</button>
+        </div>
+        <ol class="ad-links" id="linkList"></ol>
+        <p class="ad-hint ad-pad">Drag the handle or use the arrows to reorder. The <b>featured</b> link is highlighted in the accent color.</p>
+      </section>
+    </div>
+
+    <!-- Live preview -->
+    <aside class="ad-preview" aria-label="Live preview">
+      <div class="ad-preview-label mono">live preview</div>
+      <div class="ad-phone">
+        <div class="ad-phone-screen dl-page"><div id="preview"></div></div>
+      </div>
+    </aside>
+  </div>
+
+  <!-- Save bar -->
+  <footer class="ad-savebar">
+    <input id="commitMsg" class="ad-commit" placeholder="Commit message (optional)" aria-label="Commit message">
+    <div class="ad-row">
+      <label class="ad-btn ad-btn-ghost ad-file">Import JSON<input type="file" id="importFile" accept="application/json,.json"></label>
+      <button type="button" class="ad-btn ad-btn-ghost" id="downloadBtn">Download JSON</button>
+      <button type="button" class="ad-btn ad-btn-primary" id="saveBtn" disabled>Save to GitHub</button>
+    </div>
+  </footer>
+
+  <div id="toast" class="ad-toast" role="status" aria-live="polite" hidden></div>
+
+  <template id="linkTpl">
+    <li class="ad-link">
+      <div class="ad-link-side">
+        <span class="ad-handle" draggable="true" title="Drag to reorder" aria-hidden="true">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><circle cx="9" cy="6" r="1.6"/><circle cx="15" cy="6" r="1.6"/><circle cx="9" cy="12" r="1.6"/><circle cx="15" cy="12" r="1.6"/><circle cx="9" cy="18" r="1.6"/><circle cx="15" cy="18" r="1.6"/></svg>
+        </span>
+        <button type="button" class="ad-icon-btn" data-act="up" aria-label="Move up">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m18 15-6-6-6 6"/></svg>
+        </button>
+        <button type="button" class="ad-icon-btn" data-act="down" aria-label="Move down">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+        </button>
+      </div>
+      <div class="ad-link-main">
+        <div class="ad-grid-2">
+          <label class="ad-field"><span>Title</span><input data-f="title" maxlength="60" required></label>
+          <label class="ad-field"><span>Subtitle</span><input data-f="subtitle" maxlength="80"></label>
+        </div>
+        <label class="ad-field"><span>URL</span><input data-f="url" placeholder="https://… or mailto:…" inputmode="url"></label>
+        <div class="ad-link-opts">
+          <label class="ad-field ad-field-inline"><span>Icon</span><select data-f="icon"></select></label>
+          <label class="ad-check"><input type="checkbox" data-f="featured"> Featured</label>
+          <label class="ad-check"><input type="checkbox" data-f="enabled"> Visible</label>
+          <button type="button" class="ad-btn ad-btn-danger ad-btn-sm" data-act="delete">Delete</button>
+        </div>
+        <p class="ad-url-warn" hidden>This URL isn't a valid http(s), mailto: or tel: link — it will be shown as “#”.</p>
+      </div>
+    </li>
+  </template>
+
+  <script src="assets/render.js"></script>
+  <script src="assets/admin.js"></script>
+</body>
+</html>

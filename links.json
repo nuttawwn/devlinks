@@ -1,0 +1,71 @@
+{
+  "profile": {
+    "name": "Tao",
+    "nameLocal": "เต่า",
+    "handle": "tao",
+    "role": "Full Stack Developer",
+    "bio": "Building web apps end to end — from the UI people click to the APIs behind it.",
+    "avatar": "",
+    "status": "Open to opportunities",
+    "showStatus": true,
+    "stack": ["Angular", "[Backend]", "[Database]", "[Cloud]"],
+    "accent": "#3fb950"
+  },
+  "links": [
+    {
+      "id": "portfolio",
+      "title": "Portfolio",
+      "subtitle": "your-site.dev",
+      "url": "https://example.com",
+      "icon": "globe",
+      "featured": true,
+      "enabled": true
+    },
+    {
+      "id": "github",
+      "title": "GitHub",
+      "subtitle": "github.com/your-username",
+      "url": "https://github.com/your-username",
+      "icon": "github",
+      "featured": false,
+      "enabled": true
+    },
+    {
+      "id": "linkedin",
+      "title": "LinkedIn",
+      "subtitle": "linkedin.com/in/your-username",
+      "url": "https://www.linkedin.com/in/your-username",
+      "icon": "linkedin",
+      "featured": false,
+      "enabled": true
+    },
+    {
+      "id": "blog",
+      "title": "Blog / Dev notes",
+      "subtitle": "your-blog-url",
+      "url": "https://example.com/blog",
+      "icon": "pen",
+      "featured": false,
+      "enabled": true
+    },
+    {
+      "id": "resume",
+      "title": "Resume / CV",
+      "subtitle": "PDF",
+      "url": "https://example.com/resume.pdf",
+      "icon": "file",
+      "featured": false,
+      "enabled": true
+    },
+    {
+      "id": "email",
+      "title": "Email",
+      "subtitle": "you@email.com",
+      "url": "mailto:you@email.com",
+      "icon": "mail",
+      "featured": false,
+      "enabled": true
+    }
+  ],
+  "footer": "// thanks for stopping by"
+}
